@@ -1,38 +1,33 @@
 package anhtuan.com;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 public class Main {
-	public void news(ArrayList<PhoneObject> arrt) {
-		ArrayList<Integer> subject = new ArrayList<>() ;
-		subject.add(1);
-		subject.add(2);
-		subject.add(4);
-		subject.add(5);
-		
-		arrt.forEach(x -> {
-			for (int i = 0; i < subject.size(); i++) {
-				if (x.getId() == subject.get(i) && x.getTrangThai() == "on") {
-					x.notifyCustom("thong bao" );
-				}
-			}
 
-		});
 
-	}
+    public static void main(String[] args) {
 
-	public static void main(String[] args) {
-		Random rd = new Random();
+        Subject service = new NewsService();
 
-		ArrayList<PhoneObject> arr;
-		arr = new ArrayList<>();
-		arr.add(new IphoneX( 1, ( 1 + rd.nextInt(2) == 1) ? "on" : "off"));
-		arr.add(new GalaxyS9( 2, ( 1 + rd.nextInt(2) == 1) ? "on" : "off"));
-		arr.add(new GalaxyNote9( 3, ( 1 + rd.nextInt(2) == 1) ? "on" : "off"));
-		Main m = new Main();
-		m.news(arr);
-		
-	}
+        SmartPhone galaxyS9 = new GalaxyS9();
+        galaxyS9.setOn(Math.random() % 2 == 0);
+
+        SmartPhone galaxyS92 = new GalaxyS9();
+        galaxyS92.setOn(Math.random() % 2 == 0);
+
+        SmartPhone galaxyNote9 = new GalaxyNote9();
+        galaxyNote9.setOn(true);
+
+        SmartPhone iPhoneX = new IphoneX();
+        iPhoneX.setOn(true);
+
+
+        service.subscribe(galaxyS9);
+        service.subscribe(galaxyNote9);
+        service.subscribe(galaxyS92);
+        service.subscribe(iPhoneX);
+        service.unsubscribe(iPhoneX);
+
+        service.notifyObservers();
+
+    }
 
 }
